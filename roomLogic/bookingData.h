@@ -24,7 +24,6 @@ public:
     char firstName [128];
     char lastName [128];
     int bookingNumber;
-    bool vacancy = true;
     int roomNumber;
 
     void generateNumofRooms();
