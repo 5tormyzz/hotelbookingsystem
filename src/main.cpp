@@ -15,12 +15,12 @@ int main() {
     if (std::filesystem::exists(path)) {
         std::cout << "CONSOLE: Huone tiedosto on jo olemassa, skipataan luonti." << std::endl;
     } else {
-        bookingData.generateNumofRooms();
-        bookingData.createRoomsVector();
+        bookingData.generateNumofRooms(); //Luodaan huoneet
+        bookingData.createRoomsVector(); //Luodaan huonevektori
         std::cout << "CONSOLE: Huone tiedostoa ei löytynyt, luodaan uusi." << std::endl;
     }
 
-    if (!window.init())
+    if (!window.init()) //Luodaan ikkuna
         return 1;
 
     window.mainLoop();

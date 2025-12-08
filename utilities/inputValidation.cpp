@@ -11,7 +11,7 @@ int inputValidation::LettersOnly(ImGuiInputTextCallbackData* data)
 
 int inputValidation::NumbersOnly(ImGuiInputTextCallbackData* data) {
     char c = data->EventChar;
-    if (!std::isdigit(c) && c != ' ' && c != '-')
-        return 1;
-    return 0;
+    if (!std::isdigit(c)) //Tarkistaa onko jokin muu kuin numero
+        return 1; //Hylkää numero
+    return 0; //Hyväksy numero
 }

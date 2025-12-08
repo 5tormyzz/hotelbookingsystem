@@ -57,8 +57,7 @@ void bookingData::createRoomsVector() {
 
         //Tässä on vain perus logiikkaa sille, miten json tiedosto tulee järjestellä
         roomsFile << "  {\n";
-        roomsFile << "    \"roomnumber\": " << num << ",\n";
-        roomsFile << "    \"vacancy\": " << vacancy << "\n";
+        roomsFile << "    \"roomnumber\": " << num << "\n";
         roomsFile << "  }";
     }
 
@@ -71,8 +70,7 @@ void bookingData::createRoomsVector() {
         first = false;
 
         roomsFile << "  {\n";
-        roomsFile << "    \"roomnumber\": " << num2 << ",\n";
-        roomsFile << "    \"vacancy\": " << vacancy << "\n";
+        roomsFile << "    \"roomnumber\": " << num2 << "\n";
         roomsFile << "  }";
     }
 
