@@ -1,0 +1,23 @@
+[
+    {
+        "bookingNumber": 89176,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 75
+    },
+    {
+        "bookingNumber": 21895,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 168
+    },
+    {
+        "bookingNumber": 48074,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 86
+    }
+]
