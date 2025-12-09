@@ -1,0 +1,23 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles\Hotelbookingsystem.dir\src\main.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\utilities\inputValidation.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\roomLogic\bookingData.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\createWindow\initializeWindow.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\imgui.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\imgui_widgets.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\imgui_tables.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\imgui_draw.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\imgui_demo.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\backends\imgui_impl_glfw.cpp.obj: dyndep
+
+build CMakeFiles\Hotelbookingsystem.dir\libs\imGui\backends\imgui_impl_opengl3.cpp.obj: dyndep
+

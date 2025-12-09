@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\Hotelbookingsystem.dir\\libs\\imGui\\imgui_demo.cpp.obj",
+            "outputs": [
+                "C:\\Users\\susib\\Desktop\\Hotelbookingsystem\\out\\build\\x64-Debug\\vc140.pdb",
+                "CMakeFiles\\Hotelbookingsystem.dir\\libs\\imGui\\imgui_demo.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

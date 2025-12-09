@@ -1,0 +1,142 @@
+[
+    {
+        "bookingNumber": 95109,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 63
+    },
+    {
+        "bookingNumber": 52159,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 71
+    },
+    {
+        "bookingNumber": 87450,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 18
+    },
+    {
+        "bookingNumber": 20556,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 76
+    },
+    {
+        "bookingNumber": 51804,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 87
+    },
+    {
+        "bookingNumber": 59421,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 1,
+        "roomNumber": 9
+    },
+    {
+        "bookingNumber": 44199,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 99
+    },
+    {
+        "bookingNumber": 66542,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 122
+    },
+    {
+        "bookingNumber": 32651,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 98
+    },
+    {
+        "bookingNumber": 46993,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 132
+    },
+    {
+        "bookingNumber": 25246,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 159
+    },
+    {
+        "bookingNumber": 91103,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 101
+    },
+    {
+        "bookingNumber": 57366,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 167
+    },
+    {
+        "bookingNumber": 41628,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 130
+    },
+    {
+        "bookingNumber": 49915,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 144
+    },
+    {
+        "bookingNumber": 70747,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 147
+    },
+    {
+        "bookingNumber": 65428,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 160
+    },
+    {
+        "bookingNumber": 33609,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 155
+    },
+    {
+        "bookingNumber": 79853,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 181
+    },
+    {
+        "bookingNumber": 22498,
+        "firstName": "Sisu",
+        "lastName": "Honkavaara",
+        "numNights": 2,
+        "roomNumber": 176
+    }
+]
