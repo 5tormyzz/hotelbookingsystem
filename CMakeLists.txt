@@ -9,11 +9,10 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/createWindow
         ${PROJECT_SOURCE_DIR}/libs/imGui
         ${PROJECT_SOURCE_DIR}/libs/imGui/backends
-        ${PROJECT_SOURCE_DIR}/libs/GLFW/include/GLFW
-        ${PROJECT_SOURCE_DIR}/libs/GLFW/lib-mingw-w64
-        ${PROJECT_SOURCE_DIR}/libs/GLFW/lib-vc2022
+        ${PROJECT_SOURCE_DIR}/libs/GLFW/include
         ${PROJECT_SOURCE_DIR}/libs/json
 )
+
 
 add_executable(Hotelbookingsystem
         src/main.cpp
@@ -29,7 +28,9 @@ add_executable(Hotelbookingsystem
         libs/imGui/backends/imgui_impl_opengl3.cpp
 )
 
+find_package(glfw3 CONFIG REQUIRED)
+
 target_link_libraries(Hotelbookingsystem PRIVATE
-        ${CMAKE_SOURCE_DIR}/libs/GLFW/lib-mingw-w64/libglfw3.a
-        opengl32
+    opengl32
+    glfw
 )

@@ -3,10 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include <json.hpp>
+#include <filesystem>
 
 std::random_device rd;
 std::mt19937 gen(rd());
-
 
 //Tämä aliohjelma luo satunnaisen määrän yhden- ja kahdenhengen huoneita.
 void bookingData::generateNumofRooms() {
@@ -34,6 +34,8 @@ void bookingData::generateDiscounts() {
 //Tämä aliohjelma luo vektorin, joka sisältää kaikki huonenumerot.
 void bookingData::createRoomsVector() {
 
+    roomNumberOne.clear();
+    roomNumberTwo.clear();
 
     for (int i = 1; i < numberOfOneRooms+1; i++) { //Luodaan yhden hengen huoneet sisältävä vektori
         roomNumberOne.push_back(i);
@@ -43,64 +45,60 @@ void bookingData::createRoomsVector() {
         roomNumberTwo.push_back(i);
     }
 
-    std::ofstream roomsFile("../fileSystem/roomsfile.json"); //Luodaan tiedosto, jonka sisälle tallennamme vektorien sisällöt
-    roomsFile << "[\n"; //lisätään json arrayn alkuun auki sulku "["
+    // build JSON array using nlohmann::json (safer than manual string assembly)
+    nlohmann::json arr = nlohmann::json::array();
 
-    bool first = true; //tarkistetaan onko json tiedostoon lisättävä arvo "jonon" ensimmäinen.
+    for (int num : roomNumberOne)
+        arr.push_back(nlohmann::json{ {"roomnumber", num} }); //Täydennetään json arrayn perälle yhden hengen huoneet
 
-    for (int num : roomNumberOne) {
+    for (int num : roomNumberTwo)
+        arr.push_back(nlohmann::json{ {"roomnumber", num} }); //Työnnetään json arrayn perälle kahden hengen huoneet
 
-        if (!first)
-            roomsFile << ",\n"; //Tätä hyödynnetään lisäämään pilkku loppuun aina, jos lisättävä huone ei ole ensimmäinen listassa
-
-        first = false;
-
-        //Tässä on vain perus logiikkaa sille, miten json tiedosto tulee järjestellä
-        roomsFile << "  {\n";
-        roomsFile << "    \"roomnumber\": " << num << "\n";
-        roomsFile << "  }";
+    std::ofstream roomsFile("../fileSystem/roomsfile.json", std::ios::trunc); //Avataan json file kirjottamista varten
+    if (!roomsFile.is_open()) {
+        std::cerr << "Tiedoston ../fileSystem/roomsfile.json avaaminen kirjoittamista varten epaonnistui\n";
+        return;
     }
 
-    //Tämä looppi toimi aivan samalla tavalla, kuin ensimmäinenkin.
-    for (int num2 : roomNumberTwo) {
-
-        if (!first)
-            roomsFile << ",\n";
-
-        first = false;
-
-        roomsFile << "  {\n";
-        roomsFile << "    \"roomnumber\": " << num2 << "\n";
-        roomsFile << "  }";
-    }
-
-    roomsFile << "\n]\n"; //loopin päätyttyä lisäämme arrayn loppuun kiinni sulun "]"
+    roomsFile << arr.dump(4); //Dumpataan kaikki meidän koodin rakentama sisältö json filuun
+    roomsFile.close(); //Suljetaan filu
 }
 
 
-void bookingData::readRoomVector() { //Tilanteessa, jossa huonenumerot sisältävä tiedosto on jo olemassa luetaan sen sisältä huonenumerot vektoreihin
-
-    roomNumberOne.clear(); //Tyhjennetään varmuuden vuoksi vektorit
+void bookingData::readRoomVector() {
+	std::cout << "CONSOLE: Huoneen vektorin luku path: " << std::filesystem::current_path() << '\n';
+    roomNumberOne.clear(); //Siivotaan varalta vektorit.
     roomNumberTwo.clear();
 
-    std::ifstream bookingFile("../fileSystem/roomsfile.json"); //Avataan tiedosto lukutilassa
+    const std::string path = "../fileSystem/roomsfile.json";
+    std::ifstream bookingFile(path); //Avataan huonefilu lukua varten
     if (!bookingFile.is_open()) {
-        std::cerr << "Tiedoston avaaminen epäonnistui" << std::endl;
+        std::cerr << "Tiedoston " << path << " avaaminen epaonnistui." << '\n';
+        return;
     }
 
-    nlohmann::json j; //Luodaan nlohmannin kirjastolla json muuttuja, joka auttaa json tiedostojen parseemista
-    bookingFile >> j;
+    nlohmann::json j;
+    try {
+        bookingFile >> j;
+    }
+    catch (const nlohmann::json::parse_error& e) { //Pieni parse error checkki
+        std::cerr << "JSON parsetus error kohteessa " << path << ": " << e.what() << '\n';
+        return;
+    }
 
-    size_t totalRooms = j.size(); //käytetään size_t integer tyyppiä, jotta voidaan varmistaa, että arvo ei koskaan ole negatiivinen.
+    if (!j.is_array()) { //Tarkistetaan, että tiedoston rakenne on niinkuin kuuluu
+        std::cerr << "Virheellinen JSON rakenne kohteessa " << path << '\n';
+        return;
+    }
+
+    size_t totalRooms = j.size(); //Size_t:n avulla voidaan olla varmoja siitä, että ei ikinä vahingossa tule negatiivista numeroa
     size_t half = totalRooms / 2;
 
-    for (size_t i = 0; i < totalRooms; i++) {          //Tämä looppi menee json muuttujaan tallennettua tiedostoa läpi ja etsii kirjainsarjaa "roomnumber"
-        int roomNum = j[i]["roomnumber"].get<int>();   //kun se löytää kirjainsarjan se ottaa sen perään merkityn int luvun, jonka se laittaa
-        if (i < half) {
-            roomNumberOne.push_back(roomNum);
-        } else {
-            roomNumberTwo.push_back(roomNum);
-        }
+    for (size_t i = 0; i < totalRooms; ++i) {           //Tällä loopilla käytämme paria eri nlohmannin kirjaston funktiota, joilla luemme
+        if (!j[i].contains("roomnumber")) continue; //tiettyjen merkkijonojen kaksoispisteen jälkeisen int luvun
+        int roomNum = j[i]["roomnumber"].get<int>();
+        if (i < half) roomNumberOne.push_back(roomNum); //Lisätään tulos oikeaan vektoriin
+        else roomNumberTwo.push_back(roomNum);
     }
 }
 
@@ -115,16 +113,16 @@ void bookingData::pickRoomNumber() {
 
     if (bookingFile.is_open())
     {
-        bookingFile >> j;
+        bookingFile >> j; //"Dumpataan" bookingfile nlohmann::json j muuttujaan
         bookingFile.close();
 
-        for (const auto& entry : j)
+        for (const auto& entry : j) //Looppi, jolla tarkistamme kaikki varatut huoneet, jotta niitä ei voi "double bookata"
         {
             if (entry.contains("roomNumber"))
-                bookedRooms.push_back(entry["roomNumber"].get<int>());
+                bookedRooms.push_back(entry["roomNumber"].get<int>());  //Tämä hakee huonenumeron ja lisää sen vektoriin bookedRooms
 
             if (entry.contains("bookingNumber"))
-                bookingNums.push_back(entry["bookingNumber"].get<int>());
+                bookingNums.push_back(entry["bookingNumber"].get<int>()); //Tämä tekee saman, mutta varausnumeroille
         }
     }
 
@@ -168,6 +166,7 @@ void bookingData::pickRoomNumber() {
 void bookingData::createBooking() {
     nlohmann::json j;
 
+	std::filesystem::create_directories("../fileSystem"); //Luodaan fileSystem kansio, jos sitä ei ole vielä olemassa
     std::ifstream inputFile("../fileSystem/bookingfile.json");
     if (inputFile.is_open()) { //Pieni testauslogiikka, joka testaa nlohmannin parselogiikkaa
         try {
@@ -216,9 +215,9 @@ int bookingData::searchRoom(char* firstName, char* lastName, int bookingNum) {
 
     for (const auto& entry : j) {
 
-        const std::string& entryFirst = entry.value("firstName", ""); //Etsitään ja tallennetaan firstName merkkijonon jälkeen oleva stringi
-        const std::string& entryLast = entry.value("lastName", ""); //Etsitään ja tallennetaan lastName merkkijonon jälkeen oleva stringi
-        const int entryBookingNumber = entry.value("bookingNumber", -1); ////Etsitään ja tallennetaan bookingNumber merkkijonon jälkeen oleva int
+        std::string entryFirst = entry.value("firstName", ""); //Etsitään ja tallennetaan firstName merkkijonon jälkeen oleva stringi
+        std::string entryLast = entry.value("lastName", ""); //Etsitään ja tallennetaan lastName merkkijonon jälkeen oleva stringi
+        int entryBookingNumber = entry.value("bookingNumber", -1); ////Etsitään ja tallennetaan bookingNumber merkkijonon jälkeen oleva int
 
         bool matchNum = (bookingNum != -1 && bookingNum == entryBookingNumber); //Tarkastetaan, että varausnumero ei ole negatiivinen ja, että se löytyy tiedostosta
         bool matchName = firstName && lastName && std::strlen(firstName) > 0 && std::strlen(lastName) > 0 && std::strcmp(entryFirst.c_str(), firstName) == 0 && std::strcmp(entryLast.c_str(), lastName) == 0;
